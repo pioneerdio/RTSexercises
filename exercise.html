@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8"/>
+<title>Exercises 1, 2, and 3</title>
+<style>
+body {font-family:Helvetica;}
+h3,h4,h5 {padding:0px;margin:0px;}
+h2 {padding-top:15px;margin:0px;}
+div {margin:5px;}
+</style>
+<body>
+
+<h2>Exercise 1</h2>
+<h3>Print</h3><div id="exercise1_print_container"></div>
+<h3>Assert</h3><div id="exercise1_assertion_container"></div>
+<h5>Exercise 1 Guide</h5><div id="exercise1_guide_container"></div>
+
+<h2>Exercise 2</h2>
+<h3>Print</h3><div id="exercise2_print_container"></div>
+<h3>Assert</h3><div id="exercise2_assertion_container"></div>
+<h5>Exercise 2 Guide</h5><div id="exercise2_guide_container"></div>
+
+<h2>Exercise 3</h2>
+<h3>Print</h3><div id="exercise3_print_container"></div>
+
+<script src="exercise_asserts.js"></script>
+<script>
+
+// Exercise #1
+// 1. Print the number of integers in an array
+// that are above the given input and the number that are below,
+// e.g. for the array [1, 5, 2, 1, 10] with input 6, print “above: 1, below: 4”.
+
+// Exercise #1 Function with debugging ASSERTs (asserts would not be present in production code)
+function above_or_below(num,items) {
+    
+    // TEST input
+    eval(`${TESTAssertion.TEST_above_or_below1(num)}`);
+    eval(`${TESTAssertion.TEST_above_or_below2(items)}`);
+
+    let items_len=items.length;
+    let count_above=0;
+    let count_below=0;
+    for (let i=0; i<items_len; i++) {
+        if (parseInt(num)<parseInt(items[i])) {
+            count_above++;            
+        }
+        else if (parseInt(num)>parseInt(items[i])) {
+            count_below++;
+        }     
+    }
+
+    // TEST output
+    eval(`${TESTAssertion.TEST_above_or_below3(count_above)}`);
+    eval(`${TESTAssertion.TEST_above_or_below4(count_below)}`);
+
+    return ['above: '+count_above,'below: '+count_below];
+}
+
+// Exercise #1 variables
+let guide_to_exercise1_input='Want to change input number? - edit line '+parseInt( parseInt(TESTAssertion.TESTgetJSLineNumber())+parseInt(1) )+' inside '+window.location.href+"\n"; // this needs to be 1 line above compare variable being set
+let compare=6;
+
+let guide_to_exercise1_arr='Want to change input array? - edit line '+parseInt( parseInt(TESTAssertion.TESTgetJSLineNumber())+parseInt(1) )+' inside '+window.location.href; // this needs to be 1 line above items variable being set
+let items=[1,5,2,1,10];
+
+let discover_positions=above_or_below(compare,items);
+let print_in_DOM=document.getElementById('exercise1_print_container');
+
+// Exercise #1 Draw PRINT display
+print_in_DOM.innerText=discover_positions[0]+', '+discover_positions[1];
+
+// Exercise #1 Draw ASSERT display
+TESTAssertion.TESTaddAssertionMessagesToDOM('exercise1_assertion_container');
+
+// Exercise #1 Draw GUIDE display
+print_in_DOM=document.getElementById('exercise1_guide_container');
+print_in_DOM.innerText=guide_to_exercise1_input+guide_to_exercise1_arr;
+
+
+
+
+// Exercise #2
+// 2. Rotate the characters in a string by a given input and 
+// have the overflow appear at the beginning, e.g. “MyString” 
+// rotated by 2 is “ngMyStri”.
+
+// Exercise #2 Function with debugging ASSERTs (asserts would not be present in production code)
+function rotate_data(shift_number,data_to_shift) {
+      
+    // TEST input
+    eval(`${TESTAssertion.TEST_rotate_data1(shift_number)}`);
+    eval(`${TESTAssertion.TEST_rotate_data2(data_to_shift)}`);
+
+    let str_len=data_to_shift.length;
+    let shifted_data='';
+
+    if (parseInt(shift_number)<parseInt(str_len)) {
+        let arr=data_to_shift.split('');
+        let shift_to_front=arr.splice(-Math.abs(shift_number),shift_number);
+        shifted_data=shift_to_front.join('')+arr.join('');
+    }
+    else if (parseInt(shift_number)>parseInt(str_len)) {
+		// When there are more complete rotations than there are characters
+		// those entire rotations can be skipped.
+		// Get remainder from all entire rotations, then shift with it. 
+        let remainder=parseInt(shift_number)%parseInt(str_len);
+        let arr=data_to_shift.split('');
+        let shift_to_front=arr.splice(-Math.abs(remainder),remainder);
+        shifted_data=shift_to_front.join('')+arr.join('');
+    }
+    else if (parseInt(shift_number)==parseInt(str_len)) {
+        // Shifting characters are identical to character count so
+        // no calculations needed. It's the same value since
+        // it would be rotated by all its chars.
+        shifted_data=data_to_shift;    
+    }
+
+    // TEST output
+    eval(`${TESTAssertion.TEST_rotate_data3(shifted_data)}`);
+
+    return shifted_data;
+}
+
+// Exercise #2 variables
+let guide_to_exercise2_number='Want to change input number? - edit line '+parseInt( parseInt(TESTAssertion.TESTgetJSLineNumber())+parseInt(1) )+' inside '+window.location.href+"\n"; // this needs to be 1 line above shift_number variable being set
+let shift_number=2;
+
+let guide_to_exercise2_str='Want to change input string? - edit line '+parseInt( parseInt(TESTAssertion.TESTgetJSLineNumber())+parseInt(1) )+' inside '+window.location.href; // this needs to be 1 line above data_to_shift variable being set
+let data_to_shift='MyString';
+
+let new_data=rotate_data(shift_number,data_to_shift);
+
+// Exercise #2 Draw PRINT display
+print_in_DOM=document.getElementById('exercise2_print_container');
+print_in_DOM.innerText=new_data;
+
+// Exercise #2 Draw ASSERT display
+TESTAssertion.TESTaddAssertionMessagesToDOM('exercise2_assertion_container');
+
+// Exercise #2 Draw GUIDE display
+print_in_DOM=document.getElementById('exercise2_guide_container');
+print_in_DOM.innerText=guide_to_exercise2_number+guide_to_exercise2_str;
+
+
+
+
+// Exercise #3 Question
+// 3. If you could change 1 thing about your favorite framework/language/platform (pick one), what would it be?
+
+// Exercise #3 variables
+print_in_DOM=document.getElementById('exercise3_print_container');
+let data='<h4>Question:</h4>';
+data+='3. If you could change 1 thing about your favorite framework/language/platform (pick one), what would it be?';
+data+='<h4>Answer:</h4>';
+data+="I don't have a favorite language but I have a commonly used one, JavaScript. I'd like to see it slow down in pace of development. It went from 1 update in 10 years to yearly updates. Sometimes it seems like they are just adding syntactic sugar and alternate ways to do things to please the people who never liked JavaScript to make it copy those other languages.";
+
+// Exercise #3 Draw PRINT display
+print_in_DOM.innerHTML=data;
+
+</script>
+</body>
+</html>
