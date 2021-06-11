@@ -101,9 +101,9 @@ function rotate_data(shift_number,data_to_shift) {
         shifted_data=shift_to_front.join('')+arr.join('');
     }
     else if (parseInt(shift_number)>parseInt(str_len)) {
-		// When there are more complete rotations than there are characters
-		// those entire rotations can be skipped.
-		// Get remainder from all entire rotations, then shift with it. 
+	// When there are more complete rotations than there are characters
+	// those entire rotations can be skipped.
+	// Get remainder from all entire rotations, then shift with it. 
         let remainder=parseInt(shift_number)%parseInt(str_len);
         let arr=data_to_shift.split('');
         let shift_to_front=arr.splice(-Math.abs(remainder),remainder);
